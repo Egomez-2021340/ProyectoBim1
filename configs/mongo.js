@@ -8,6 +8,9 @@ export const dbConnection = async()=>{
             console.log('MongoDB | Could not be connect to MongoDB');
             mongoose.disconnect();
         });
+        mongoose.connection.on('connecting', () => {
+            console.log('MongoDB | Try connecting');
+        });
         mongoose.connection.on('connected', () => {
             console.log('MongoDB | Connected to MongoDB');
         });
@@ -20,8 +23,8 @@ export const dbConnection = async()=>{
         mongoose.connection.on('disconnected', () => {
             console.log('MongoDB | disconnected');
         });
-        await mongoose.connect(process.env.URI_MONGO,{
-            serverSelectionTimeoutMS:5000,
+        await mongoose.connect(process.env.URI_MONGO, {
+            serverSelectionTimeOutMS: 5000,
             maxPoolSize:50
         })
     } catch (e) {
